@@ -1,0 +1,68 @@
+#インポート
+from time import sleep
+from bs4 import BeautifulSoup
+from selenium import webdriver
+from selenium.webdriver.common.by import By
+# from selenium.webdriver.common.keys import Keys
+import pandas as pd
+import random
+
+#chromedriverのパスを指定
+chrome_path = r"C:\Users\Takekawa Takumi\Downloads\台データスクレイピングプログラム\chromedriver.exe"
+
+driver = webdriver.Chrome(chrome_path)
+
+#yahoom画像検索画面のパスを指定
+
+sleep(5)
+
+url ="https://daidata.goraggio.com/"
+
+driver.get(url)
+
+sleep(5)
+
+#エリアを絞る
+areas = driver.find_elements_by_class_name('equiv2col')[6]
+#一つの県を取得
+area = areas.find_elements_by_class_name("equiv2col2")[0]
+#県のaタグを取得して、クリック
+sleep(5)
+area.find_element(By.TAG_NAME, "a").click()
+
+sleep(5)
+
+#tableタグの中の店名のaタグを取得し、クリック
+table_tag = driver.find_element_by_id("sorter")
+sleep(5)
+table_tag.find_elements(By.TAG_NAME, "a")[0].click()
+
+#利用規約の同意ボタンをクリック
+sleep(5)
+accept_btn = driver.find_element_by_class_name('accept_btn').click()
+
+sleep(5)
+#選択するカテゴリーを「スロット」に指定
+categories = driver.find_element_by_class_name('equiv')
+category = categories.find_elements_by_class_name('equiv4')[2]
+#「機種別で探す」を指定してクリック
+list_item=category.find_elements(By.TAG_NAME, "a")[0]
+sleep(5)
+list_item.click()
+
+#機種を選択して、クリック
+sleep(5)
+kisyu_wrap = driver.find_element_by_class_name('list2col')
+kisyu_select = kisyu_wrap.find_elements(By.TAG_NAME, "a")[1]
+sleep(5)
+kisyu_select.click()
+
+
+
+
+#台番号を指定して、クリック 
+sleep(5)
+daiNo_table = driver.find_element_by_class_name('tablesorter')
+daiNo_table_trs = daiNo_table.find_elements(By.TAG_NAME, "tr")
+
+#こっから先は未公開
